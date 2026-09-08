@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Base surfaces (abyssal depth scale) ---- */
+  --color-abyss: #050b13;
+  --color-depth-950: #071120;
+  --color-depth-900: #0a1a2e;
+  --color-depth-850: #0d2138;
+  --color-depth-800: #112a44;
+  --color-depth-border: #1c3a54;
+  --color-depth-border-soft: #14293c;
+
+  /* ---- Text ---- */
+  --color-ink-100: #eaf3f8;
+  --color-ink-300: #b6cbd8;
+  --color-ink-500: #7d97a8;
+  --color-ink-700: #4c6376;
+
+  /* ---- Accents (meaning-coded) ---- */
+  --color-signal-cyan: #2fd7ee;
+  --color-signal-teal: #33ddc0;
+  --color-signal-purple: #a684fb;
+  --color-signal-magenta: #f34fd8;
+  --color-signal-green: #4fdb8f;
+  --color-signal-amber: #f6c453;
+  --color-signal-orange: #fb9552;
+  --color-signal-red: #fb5f68;
+
+  /* ---- Fonts ---- */
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --shadow-glow-cyan: 0 0 0 1px rgba(47,215,238,0.18), 0 0 24px -4px rgba(47,215,238,0.35);
+  --shadow-glow-magenta: 0 0 0 1px rgba(243,79,216,0.2), 0 0 28px -4px rgba(243,79,216,0.4);
+  --shadow-panel: 0 1px 0 0 rgba(255,255,255,0.03) inset, 0 12px 32px -16px rgba(0,0,0,0.6);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-depth-border-soft);
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-abyss);
+    color: var(--color-ink-100);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(47, 215, 238, 0.25);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal-cyan);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-depth-border);
+    border-radius: 8px;
+    border: 2px solid var(--color-abyss);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-700);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-mono-data {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Faint topographic / bathymetric contour backdrop */
+  .bg-bathymetric {
+    background-image:
+      radial-gradient(ellipse 900px 500px at 12% -10%, rgba(47,215,238,0.07), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(166,132,251,0.05), transparent 60%),
+      repeating-radial-gradient(circle at 20% 20%, rgba(255,255,255,0.015) 0, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 68px),
+      linear-gradient(180deg, var(--color-abyss), var(--color-depth-950) 40%, var(--color-abyss));
+  }
+
+  .bg-grid-technical {
+    background-image:
+      linear-gradient(rgba(120,180,200,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,180,200,0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  .glass-panel {
+    background: linear-gradient(180deg, rgba(17,42,68,0.55), rgba(10,26,46,0.55));
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--color-depth-border-soft);
+  }
+
+  .sonar-sweep {
+    background: conic-gradient(from 0deg, rgba(47,215,238,0.28), transparent 22%, transparent 100%);
+    animation: sweep-rotate 10s linear infinite;
+  }
+}
+
+@keyframes sweep-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sonar-sweep {
+    animation: none;
+  }
+}
